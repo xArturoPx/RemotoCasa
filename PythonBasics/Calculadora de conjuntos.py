@@ -2,7 +2,7 @@ def leer_conjunto(mensaje):
     numeros = input(mensaje).split(",")
     conjunto = set()
 
-    for num in numeros:
+
         try:
             num = int(num)
             if num in conjunto:
