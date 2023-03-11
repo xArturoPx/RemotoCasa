@@ -20,14 +20,16 @@ def validaCero(divisor):
     else:
         return divisor
 
-def validacion(mensaje):
+def validacion(mensaje, max_intentos=3):
     contador = 0
-    while contador < 3:
+    while contador < max_intentos:
         try:
             return int(input(mensaje))
         except:
             print("Entero no válido,Intentelo de nuevo")
-            contador = contador + 1
+            contador += 1
+    print("Número máximo de intentos alcanzado. Saliendo...")
+    exit()
 def menu():
     print("")
     print("___________________________________________")
