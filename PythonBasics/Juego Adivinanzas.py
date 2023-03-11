@@ -1,34 +1,54 @@
 import random
 
-print("*********************************************+")
-print("Bienvenido al juego de adivinanza de números!")
-print("*********************************************+")
+def juego():
+    # Inicialización de variables
+    intentos_restantes = 10
+    rango_min = 1
+    rango_max = 10
+    numero_a_adivinar = random.randint(rango_min, rango_max)
 
-min_num = 1
-max_num = 100
-numero_a_adivinar = random.randint(min_num, max_num)
-num_intentos = 10
+    # Ciclo principal del juego
+    while intentos_restantes > 0:
+        # Muestra la cantidad de intentos restantes
+        print(f"Te quedan {intentos_restantes} intentos")
+        # Pide al usuario que adivine el número
+        numero_elegido = input(f"Adivina un número entre {rango_min} y {rango_max}: ")
 
-print(f"Adivina un número entre {min_num} y {max_num}. Tienes {num_intentos} intentos.")
+        # Validación de la entrada del usuario
+        while not numero_elegido.isdigit():
+            print("Por favor, ingresa un número.")
+            numero_elegido = input(f"Adivina un número entre {rango_min} y {rango_max}: ")
+        numero_elegido = int(numero_elegido)
 
-for intento_actual in range(1, num_intentos + 1):
-    # Pedir al usuario que ingrese un número válido
-    while True:
-        numero_ingresado_str = input(f"Intento {intento_actual}. Ingresa un número: ")
-        if not numero_ingresado_str.isdigit():
-            print("Por favor ingresa un número entero válido.")
+        # Validación de que el número esté dentro del rango
+        if numero_elegido < rango_min or numero_elegido > rango_max:
+            print(f"Por favor, ingresa un número entre {rango_min} y {rango_max}.")
+            continue
+
+        # Compara el número elegido con el número a adivinar
+        if numero_elegido == numero_a_adivinar:
+            # Mensaje de éxito en la adivinanza
+            print("--------------------------------------------")
+            print(f"¡Felicidades, adivinaste el número!: -> {numero_a_adivinar} <-")
+            print(f"Te sobraron {intentos_restantes} intentos")
+            print("Te añadiremos 10 intentos !Buena Suerte¡")
+            print("¡Vamos por otro!")
+            print("¡Subiremos la dificultad!")
+            print("--------------------------------------------")
+
+            # Aumenta la dificultad del juego y reinicia los intentos y el número a adivinar
+            rango_max += 10
+            intentos_restantes += 10
+            numero_a_adivinar = random.randint(rango_min, rango_max)
+
+        elif numero_elegido < numero_a_adivinar:
+            # Mensaje de que el número es más grande
+            print("El número es más mayor")
+            intentos_restantes -= 1
         else:
-            numero_ingresado = int(numero_ingresado_str)
-            break
+            # Mensaje de que el número es más chico
+            print("El número es más ")
+            intentos_restantes -= 1
 
-    if numero_ingresado == numero_a_adivinar:
-        print("¡Felicidades! Adivinaste el número.")
-        break
-
-    if numero_ingresado < numero_a_adivinar:
-        print("El número a adivinar es mayor.")
-    else:
-        print("El número a adivinar es menor.")
-
-    if intento_actual == num_intentos:
-        print(f"Lo siento, has agotado tus {num_intentos} intentos. El número correcto era {numero_a_adivinar}.")
+    # Mensaje de fin del juego
+    print("¡Se te acabaron los intentos! Perdiste :(")
